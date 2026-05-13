@@ -1,0 +1,43 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id          String   @id @default(cuid())
+  email       String   @unique
+  password    String
+  createdAt   DateTime @default(now())
+
+  products    Product[]
+}
+
+model Product {
+  id              String   @id @default(cuid())
+  productName     String
+  website         String
+  description     String
+  targetAudience  String
+  competitors     String
+  brandTone       String
+
+  userId          String
+  user            User @relation(fields: [userId], references: [id])
+
+  keywords        Keyword[]
+
+  createdAt       DateTime @default(now())
+}
+
+model Keyword {
+  id          String   @id @default(cuid())
+  keyword     String
+
+  productId   String
+  product     Product @relation(fields: [productId], references: [id])
+
+  createdAt   DateTime @default(now())
+}
