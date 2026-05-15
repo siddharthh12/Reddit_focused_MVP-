@@ -1,9 +1,13 @@
 const express = require("express");
 
+const {
+  createProduct,
+  getDashboardData,
+} = require("../controllers/productController");
+
 const router = express.Router();
 
-router.get("/test", (req, res) => {
-    res.json({ message: "Product route working" });
-});
+router.post("/create", createProduct);
+router.get("/dashboard", getDashboardData);
 
 module.exports = router;
